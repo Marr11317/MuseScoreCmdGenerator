@@ -2,13 +2,17 @@ def itemsToEnum(items: set) -> str :
     text = ''
     for value in items :
         text += '      ' + value.replace('-', '_').upper() + ',\n'
-    text = text[:-2] #remove last two characters (',\n')
+    text = text[:-2] # remove last two characters (',\n')
     return text
 
 def itemsToStrings(items: set) -> str :
     text = ''
     for value in items :
-        text += '            case Cmd::' + value.replace('-', '_').upper() + ': return "' + value + '"; break;\n'
+        text += ('            case Cmd::' + value.replace('-', '_').upper() 
+             + ' ' * (30 - len(value.replace('-', '_'))) # align
+             + ': return "' + value + '"'
+             + ' ' * (30 - len(value.replace('-', '_'))) # align
+             + '; break;\n')
     return text
 
 originalfile = open("shortcut.cpp", "r")
@@ -28,13 +32,13 @@ while True :
         #text += '      ' + value + '\n'
 
 
-print(items)
+#print(items)
 
 # Generate the enum in the .h
 moldFile = open('mold.h', 'r')
 outputHFile = open("cmdlist.h", "w+")
-#outFile = open("All.txt", 'w+')
-#outFile.write(items)
+outFile = open("All.txt", 'w+')
+outFile.write('\n'.join(items))
 
 mold = moldFile.read()
 output = mold.replace('//Replace', itemsToEnum(items)).replace('//AndReplace', itemsToStrings(items))

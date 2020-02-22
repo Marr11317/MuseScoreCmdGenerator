@@ -712,7 +712,7 @@ Shortcut Shortcut::_sc[] = {
       {
          MsWidget::SCORE_TAB,
          STATE_NORMAL | STATE_NOTE_ENTRY,
-         "stretch+",
+         "stretch-more",
          QT_TRANSLATE_NOOP("action","Increase Layout Stretch"),
          QT_TRANSLATE_NOOP("action","Increase layout stretch"),
          QT_TRANSLATE_NOOP("action","Increase layout stretch factor of selected measures"),
@@ -722,7 +722,7 @@ Shortcut Shortcut::_sc[] = {
       {
          MsWidget::SCORE_TAB,
          STATE_NORMAL | STATE_NOTE_ENTRY,
-         "stretch-",
+         "stretch-less",
          QT_TRANSLATE_NOOP("action","Decrease Layout Stretch"),
          QT_TRANSLATE_NOOP("action","Decrease layout stretch"),
          QT_TRANSLATE_NOOP("action","Decrease layout stretch factor of selected measures"),
