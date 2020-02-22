@@ -1,36 +1,45 @@
+def itemsToEnum(items: set) -> str :
+    text = ''
+    for value in items :
+        text += '      ' + value.replace('-', '_').upper() + ',\n'
+    text = text[:-2] #remove last two characters (',\n')
+    return text
+
+def itemsToStrings(items: set) -> str :
+    text = ''
+    for value in items :
+        text += '            case Cmd::' + value.replace('-', '_').upper() + ': return "' + value + '"; break;\n'
+    return text
+
 originalfile = open("shortcut.cpp", "r")
-text = ""
+items = {'dummy'}
+items.remove('dummy') # apparently needed to create a set without confusion
 while True :
     line = originalfile.readline()
-    value = line.strip().replace(',', '').replace('"', '').replace('-', '_').upper()
+    value = line.strip().replace(',', '').replace('"', '')
 
     if line == "/// END OF FILE\n" :
         break
 
     if (line.strip().startswith('"')    # check if it is a string
         and not ' ' in line.strip()     # check if it doesn't contain spaces
-        and not value in text           # be sure it's not there twice
-        and not value.replace('_', '') in text) :  # some values like RELAYOUT also come as RE_LAYOUT   
+        and not value.replace('_', '') in items) :  # some values like RELAYOUT also come as RE_LAYOUT   
+        items.add(value)
+        #text += '      ' + value + '\n'
 
-        text += '      ' + value + '\n'
 
-
-#print(text)
+print(items)
 
 # Generate the enum in the .h
-moldHFile = open('mold.h', 'r')
+moldFile = open('mold.h', 'r')
 outputHFile = open("cmdlist.h", "w+")
+#outFile = open("All.txt", 'w+')
+#outFile.write(items)
 
-mold = moldHFile.read()
-outputHFile.write(mold.replace('//Replace', text))
+mold = moldFile.read()
+output = mold.replace('//Replace', itemsToEnum(items)).replace('//AndReplace', itemsToStrings(items))
+outputHFile.write(output)
 
-moldHFile.close()
+moldFile.close()
 outputHFile.close()
 
-# Generate the mapping to a String in the .cpp
-moldCppFile = open('mold.cpp', 'r')
-outputCppFile = open('cmdlist.cpp', 'w+')
-moldCpp = moldCppFile.read()
-
-moldCppFile.close()
-outputCppFile.close()

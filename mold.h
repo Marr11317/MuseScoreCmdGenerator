@@ -14,12 +14,18 @@
 
 namespace Ms {
 
-enum class cmdList : unsigned int {
+enum class Cmd : unsigned int {
       Invalid = 0,
 
 //Replace
       };
 
-static QString 
+static QString cmdToString(Cmd cmd) {
+      switch (cmd) {
+            case Cmd::Invalid: return "Invalid"; break;
+//AndReplace
+            }
+      }
 } // Ms
+
 #endif // __CMDLIST_H__
