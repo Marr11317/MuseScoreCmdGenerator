@@ -23,7 +23,9 @@ enum class Cmd : unsigned int {
 static QString cmdToString(Cmd cmd) {
       switch (cmd) {
             case Cmd::Invalid: return "Invalid"; break;
+            
 //AndReplace
+            default: return "Invalid"; break;
             }
       }
 } // Ms

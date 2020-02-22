@@ -37,8 +37,6 @@ while True :
 # Generate the enum in the .h
 moldFile = open('mold.h', 'r')
 outputHFile = open("cmdlist.h", "w+")
-outFile = open("All.txt", 'w+')
-outFile.write('\n'.join(items))
 
 mold = moldFile.read()
 output = mold.replace('//Replace', itemsToEnum(items)).replace('//AndReplace', itemsToStrings(items))
@@ -47,3 +45,7 @@ outputHFile.write(output)
 moldFile.close()
 outputHFile.close()
 
+# generate a list of commands
+outFile = open("All.txt", 'w+')
+outFile.write('\n'.join(items))
+outFile.close()
